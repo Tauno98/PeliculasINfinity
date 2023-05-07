@@ -11,6 +11,8 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+ 
+
   <script>
     $(document).ready(function () {
       $('.slider').slick({
@@ -71,85 +73,88 @@
 
   </header>
   <main class="agregado">
-  <div id="search-container" style="display:none">
-    <div class="container">
-      <div class="search-container">
-        <input type="text" id="movie-name" placeholder="Enter movie name here...">
-        <button id="search-btn">Search</button>
+    <div id="search-container" style="display:none">
+      <div class="container">
+        <div class="search-container">
+          <input type="text" id="movie-name" placeholder="Enter movie name here...">
+          <button id="search-btn">Search</button>
+        </div>
+        <div id="result"></div>
       </div>
-      <div id="result"></div>
+      <button id="close-btn">Close</button>
     </div>
-    <button id="close-btn">Close</button>
-  </div>
-  <script src="key.js"></script>
-  <script src="index.js"></script>
-  <script>
-    // Obtener el botón "Show search"
-    var showSearchBtn = document.getElementById("show-search-btn");
+    <script src="key.js"></script>
+    <script src="index.js"></script>
+    <script>
+      // Obtener el botón "Show search"
+      var showSearchBtn = document.getElementById("show-search-btn");
 
-    // Obtener el contenedor de búsqueda
-    var searchContainer = document.getElementById("search-container");
+      // Obtener el contenedor de búsqueda
+      var searchContainer = document.getElementById("search-container");
 
-    // Agregar un controlador de eventos para el botón "Show search"
-    showSearchBtn.onclick = function () {
-      searchContainer.style.display = "block";
-    }
-    const closeBtn = document.getElementById("close-btn");
+      // Agregar un controlador de eventos para el botón "Show search"
+      showSearchBtn.onclick = function () {
+        searchContainer.style.display = "block";
+      }
+      const closeBtn = document.getElementById("close-btn");
 
-    // Ocultar el contenedor de búsqueda
-    function closeSearchContainer() {
-      searchContainer.style.display = "none";
-    }
+      // Ocultar el contenedor de búsqueda
+      function closeSearchContainer() {
+        searchContainer.style.display = "none";
+      }
 
-    // Ocultar el contenedor de búsqueda cuando se hace clic en el botón de cerrar
-    closeBtn.addEventListener("click", closeSearchContainer);
+      // Ocultar el contenedor de búsqueda cuando se hace clic en el botón de cerrar
+      closeBtn.addEventListener("click", closeSearchContainer);
 
-  </script>
-  
+    </script>
+
     <h2>Últimas películas agregadas</h2>
     <div class="slider">
-        <?php include 'obtener_peliculas.php'; ?>
-        <img src="<?php echo $imagen; ?>" alt="Poster de la película">
-        <h3><?php echo $titulo; ?></h3>
-        <p><?php echo $descripcion; ?></p>
-      </div>
-      
       <div class="slide">
-        <?php include 'obtener_peliculas.php'; ?>
-        <img src="<?php echo $imagen; ?>" alt="Poster de la película">
-        <h3><?php echo $titulo; ?></h3>
-        <p><?php echo $descripcion; ?></p>
+        <img src="imagen1.jpeg" alt="Poster de película 1">
+        <h3>Avatar 2</h3>
+        <p>Descripción de la película 1</p>
+      </div>
+
+      <div class="slide">
+        <img src="imagen2.jpg" alt="Poster de película 2">
+        <h3>Título de la película 2</h3>
+        <p>Descripción de la película 2</p>
       </div>
       <div class="slide">
-        <?php include 'obtener_peliculas.php'; ?>
-        <img src="<?php echo $imagen; ?>" alt="Poster de la película">
-        <h3><?php echo $titulo; ?></h3>
-        <p><?php echo $descripcion; ?></p>
+        <img src="imagen3.jpg" alt="Poster de película 3">
+        <h3>Título de la película 3</h3>
+        <p>Descripción de la película 3</p>
       </div>
     </div>
+    
+    <script>
+      $(document).ready(function () {
+        // enviamos una solicitud AJAX para obtener los datos de las películas
+        $.ajax({
+          url: "obtener_peliculas.php",
+          method: "GET",
+          dataType: "json",
+          success: function (data) {
+            // si la solicitud es exitosa, creamos un slide por cada película
+            for (var i = 0; i < data.length; i++) {
+              var pelicula = data[i];
+              var slide = $("<div>").addClass("slide");
+              var imagen = $("<img>").attr("src", pelicula.imagen).attr("alt", "Poster de la película");
+              var titulo = $("<h3>").text(pelicula.titulo);
+              var descripcion = $("<p>").text(pelicula.descripcion);
+              slide.append(imagen).append(titulo).append(descripcion);
+              $(".slider").append(slide);
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Error: " + errorThrown);
+          }
+        });
+      });
+    </script>
   </main>
-  <p>Hola Munco</p>
   <div class="recommended-movies">
-  <h2>Películas recomendadas</h2>
-  <div class="movie-list">
-    <div class="movie">
-      <img src="imagen1.jpeg" alt="Poster de película 1">
-      <h3>Avatar 2</h3>
-      <p>Descripción de la película 1</p>
-    </div>
-    <div class="movie">
-      <img src="imagen2.jpg" alt="Poster de película 2">
-      <h3>Título de la película 2</h3>
-      <p>Descripción de la película 2</p>
-    </div>
-    <div class="movie">
-      <img src="imagen3.jpg" alt="Poster de película 3">
-      <h3>Título de la película 3</h3>
-      <p>Descripción de la película 3</p>
-    </div>
-  </div>
-</div>
-   <div class="recommended-movies">
     <h2>Películas recomendadas</h2>
     <div class="movie-list">
       <div class="movie">
@@ -169,9 +174,9 @@
       </div>
     </div>
   </div>
-
   <footer class="pie_pagina">
     <p>Derechos reservados &copy; 2023</p>
+    <p>Telfono de contacto</p>
   </footer>
 </body>
 
