@@ -1,5 +1,3 @@
-<h2>Últimas películas agregadas</h2>
-<div class="slider">
   <?php
     // Conexión a la base de datos
     $conn = mysqli_connect("localhost", "usuario", "contraseña", "basededatos");
@@ -20,4 +18,4 @@
     // Cerrar la conexión a la base de datos
     mysqli_close($conn);
   ?>
-</div>
+
